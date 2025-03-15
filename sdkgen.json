@@ -1,0 +1,9 @@
+{
+  "type": "client-php",
+  "require": {
+    "sdkfabric/openai": {
+      "target": "./src",
+      "namespace": "SdkFabric\\Openai"
+    }
+  }
+}
