@@ -12,59 +12,59 @@ use PSX\Schema\Attribute\Key;
 #[Description('')]
 class CompletionRequest implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
-    #[Description('')]
+    #[Description('Model ID used to generate the response, like gpt-4o or o1. OpenAI offers a wide range of models with different capabilities, performance characteristics, and price points. Refer to the model guide to browse and compare available models.')]
     protected ?string $model = null;
     /**
      * @var array<CompletionMessage>|null
      */
-    #[Description('')]
+    #[Description('A list of messages comprising the conversation so far. Depending on the model you use, different message types (modalities) are supported, like text, images, and audio.')]
     protected ?array $messages = null;
     #[Key('frequency_penalty')]
-    #[Description('')]
+    #[Description('Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model\'s likelihood to repeat the same line verbatim.')]
     protected ?float $frequencyPenalty = null;
     /**
      * @var \PSX\Record\Record<int>|null
      */
     #[Key('logit_bias')]
-    #[Description('')]
+    #[Description('Modify the likelihood of specified tokens appearing in the completion.')]
     protected ?\PSX\Record\Record $logitBias = null;
-    #[Description('')]
+    #[Description('Whether to return log probabilities of the output tokens or not. If true, returns the log probabilities of each output token returned in the content of message.')]
     protected ?bool $logprobs = null;
     #[Key('max_completion_tokens')]
-    #[Description('')]
+    #[Description('An upper bound for the number of tokens that can be generated for a completion, including visible output tokens and reasoning tokens.')]
     protected ?int $maxCompletionTokens = null;
     /**
      * @var \PSX\Record\Record<string>|null
      */
-    #[Description('')]
+    #[Description('Set of 16 key-value pairs that can be attached to an object. This can be useful for storing additional information about the object in a structured format, and querying for objects via API or the dashboard.')]
     protected ?\PSX\Record\Record $metadata = null;
     #[Key('presence_penalty')]
-    #[Description('')]
+    #[Description('Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model\'s likelihood to talk about new topics.')]
     protected ?float $presencePenalty = null;
     #[Key('reasoning_effort')]
-    #[Description('')]
+    #[Description('Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.')]
     protected ?string $reasoningEffort = null;
-    #[Description('')]
+    #[Description('This feature is in Beta. If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed, and you should refer to the system_fingerprint response parameter to monitor changes in the backend.')]
     protected ?int $seed = null;
     #[Key('service_tier')]
-    #[Description('')]
+    #[Description('Specifies the latency tier to use for processing the request. This parameter is relevant for customers subscribed to the scale tier service')]
     protected ?string $serviceTier = null;
     /**
      * @var array<string>|null
      */
-    #[Description('')]
+    #[Description('Up to 4 sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.')]
     protected ?array $stop = null;
-    #[Description('')]
+    #[Description('Whether or not to store the output of this chat completion request for use in our model distillation or evals products.')]
     protected ?bool $store = null;
-    #[Description('')]
+    #[Description('What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.')]
     protected ?float $temperature = null;
     #[Key('top_logprobs')]
-    #[Description('')]
+    #[Description('An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability. logprobs must be set to true if this parameter is used.')]
     protected ?int $topLogprobs = null;
     #[Key('top_p')]
-    #[Description('')]
+    #[Description('An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.')]
     protected ?float $topP = null;
-    #[Description('')]
+    #[Description('A unique identifier representing your end-user, which can help OpenAI to monitor and detect abuse.')]
     protected ?string $user = null;
     public function setModel(?string $model): void
     {

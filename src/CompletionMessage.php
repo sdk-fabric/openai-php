@@ -6,15 +6,26 @@
 
 namespace SdkFabric\Openai;
 
+use PSX\Schema\Attribute\DerivedType;
 use PSX\Schema\Attribute\Description;
+use PSX\Schema\Attribute\Discriminator;
 
 #[Description('')]
-class CompletionMessage implements \JsonSerializable, \PSX\Record\RecordableInterface
+#[Discriminator('role')]
+#[DerivedType(CompletionMessageDeveloper::class, 'developer')]
+#[DerivedType(CompletionMessageSystem::class, 'system')]
+#[DerivedType(CompletionMessageUser::class, 'user')]
+#[DerivedType(CompletionMessageAssistant::class, 'assistant')]
+#[DerivedType(CompletionMessageTool::class, 'tool')]
+abstract class CompletionMessage implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
     #[Description('')]
     protected ?string $role = null;
+    /**
+     * @var array<string>|null
+     */
     #[Description('')]
-    protected ?string $content = null;
+    protected ?array $content = null;
     public function setRole(?string $role): void
     {
         $this->role = $role;
@@ -23,11 +34,17 @@ class CompletionMessage implements \JsonSerializable, \PSX\Record\RecordableInte
     {
         return $this->role;
     }
-    public function setContent(?string $content): void
+    /**
+     * @param array<string>|null $content
+     */
+    public function setContent(?array $content): void
     {
         $this->content = $content;
     }
-    public function getContent(): ?string
+    /**
+     * @return array<string>|null
+     */
+    public function getContent(): ?array
     {
         return $this->content;
     }
