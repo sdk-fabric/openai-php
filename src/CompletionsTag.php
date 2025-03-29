@@ -19,6 +19,7 @@ class CompletionsTag extends TagAbstract
      *
      * @param CompletionRequest $payload
      * @return CompletionResponse
+     * @throws ErrorException
      * @throws ClientException
      */
     public function create(CompletionRequest $payload): CompletionResponse
@@ -49,6 +50,12 @@ class CompletionsTag extends TagAbstract
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
 
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
+
+                throw new ErrorException($data);
+            }
+
             throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
@@ -63,6 +70,7 @@ class CompletionsTag extends TagAbstract
      * @param string|null $model
      * @param string|null $order
      * @return CompletionCollection
+     * @throws ErrorException
      * @throws ClientException
      */
     public function getAll(?string $after = null, ?int $limit = null, ?string $model = null, ?string $order = null): CompletionCollection
@@ -95,6 +103,12 @@ class CompletionsTag extends TagAbstract
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
 
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
+
+                throw new ErrorException($data);
+            }
+
             throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
             throw new ClientException('An unknown error occurred: ' . $e->getMessage());
@@ -106,6 +120,7 @@ class CompletionsTag extends TagAbstract
      *
      * @param string $completionId
      * @return CompletionDeleted
+     * @throws ErrorException
      * @throws ClientException
      */
     public function delete(string $completionId): CompletionDeleted
@@ -134,6 +149,12 @@ class CompletionsTag extends TagAbstract
         } catch (BadResponseException $e) {
             $body = $e->getResponse()->getBody();
             $statusCode = $e->getResponse()->getStatusCode();
+
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
+
+                throw new ErrorException($data);
+            }
 
             throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
         } catch (\Throwable $e) {
