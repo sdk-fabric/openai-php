@@ -25,15 +25,23 @@ class Client extends ClientAbstract
         );
     }
 
+    public function responses(): ResponsesTag
+    {
+        return new ResponsesTag(
+            $this->httpClient,
+            $this->parser
+        );
+    }
+
 
 
     public static function build(string $token): self
     {
-        return new self('https://api.openai.com/', new Credentials\HttpBearer($token));
+        return new self('https://api.openai.com', new Credentials\HttpBearer($token));
     }
 
     public static function buildAnonymous(): self
     {
-        return new self('https://api.openai.com/', new Credentials\Anonymous());
+        return new self('https://api.openai.com', new Credentials\Anonymous());
     }
 }

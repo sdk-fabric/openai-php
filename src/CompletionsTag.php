@@ -63,6 +63,53 @@ class CompletionsTag extends TagAbstract
     }
 
     /**
+     * Delete a stored chat completion. Only Chat Completions that have been created with the store parameter set to true can be deleted.
+     *
+     * @param string $completionId
+     * @return CompletionDeleted
+     * @throws ErrorException
+     * @throws ClientException
+     */
+    public function delete(string $completionId): CompletionDeleted
+    {
+        $url = $this->parser->url('/v1/chat/completions/:completion_id', [
+            'completion_id' => $completionId,
+        ]);
+
+        $options = [
+            'headers' => [
+            ],
+            'query' => $this->parser->query([
+            ], [
+            ]),
+        ];
+
+        try {
+            $response = $this->httpClient->request('DELETE', $url, $options);
+            $body = $response->getBody();
+
+            $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(CompletionDeleted::class));
+
+            return $data;
+        } catch (ClientException $e) {
+            throw $e;
+        } catch (BadResponseException $e) {
+            $body = $e->getResponse()->getBody();
+            $statusCode = $e->getResponse()->getStatusCode();
+
+            if ($statusCode >= 0 && $statusCode <= 999) {
+                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
+
+                throw new ErrorException($data);
+            }
+
+            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
+        } catch (\Throwable $e) {
+            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * List stored Chat Completions. Only Chat Completions that have been stored with the store parameter set to true will be returned.
      *
      * @param string|null $after
@@ -95,53 +142,6 @@ class CompletionsTag extends TagAbstract
             $body = $response->getBody();
 
             $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(CompletionCollection::class));
-
-            return $data;
-        } catch (ClientException $e) {
-            throw $e;
-        } catch (BadResponseException $e) {
-            $body = $e->getResponse()->getBody();
-            $statusCode = $e->getResponse()->getStatusCode();
-
-            if ($statusCode >= 0 && $statusCode <= 999) {
-                $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(Error::class));
-
-                throw new ErrorException($data);
-            }
-
-            throw new UnknownStatusCodeException('The server returned an unknown status code: ' . $statusCode);
-        } catch (\Throwable $e) {
-            throw new ClientException('An unknown error occurred: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Delete a stored chat completion. Only Chat Completions that have been created with the store parameter set to true can be deleted.
-     *
-     * @param string $completionId
-     * @return CompletionDeleted
-     * @throws ErrorException
-     * @throws ClientException
-     */
-    public function delete(string $completionId): CompletionDeleted
-    {
-        $url = $this->parser->url('/v1/chat/completions/:completion_id', [
-            'completion_id' => $completionId,
-        ]);
-
-        $options = [
-            'headers' => [
-            ],
-            'query' => $this->parser->query([
-            ], [
-            ]),
-        ];
-
-        try {
-            $response = $this->httpClient->request('DELETE', $url, $options);
-            $body = $response->getBody();
-
-            $data = $this->parser->parse((string) $body, \PSX\Schema\SchemaSource::fromClass(CompletionDeleted::class));
 
             return $data;
         } catch (ClientException $e) {
