@@ -9,6 +9,7 @@ namespace SdkFabric\Openai;
 use PSX\Schema\Attribute\DerivedType;
 use PSX\Schema\Attribute\Description;
 use PSX\Schema\Attribute\Discriminator;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 #[Discriminator('type')]
@@ -16,6 +17,7 @@ use PSX\Schema\Attribute\Discriminator;
 abstract class ResponseResponseOutput implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
     #[Description('')]
+    #[Nullable(true)]
     protected ?string $type = null;
     public function setType(?string $type): void
     {

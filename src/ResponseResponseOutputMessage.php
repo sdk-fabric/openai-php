@@ -7,6 +7,7 @@
 namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('An output message from the model.')]
 class ResponseResponseOutputMessage extends ResponseResponseOutput implements \JsonSerializable, \PSX\Record\RecordableInterface
@@ -23,7 +24,8 @@ class ResponseResponseOutputMessage extends ResponseResponseOutput implements \J
     #[Description('The status of the message input. One of in_progress, completed, or incomplete. Populated when input items are returned via API.')]
     protected ?string $status = null;
     #[Description('The type of the output message. Always message.')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'message';
     /**
      * @param array<string>|null $content
      */
