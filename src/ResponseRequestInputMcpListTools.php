@@ -20,18 +20,18 @@ class ResponseRequestInputMcpListTools extends ResponseRequestInput implements \
     #[Description('The label of the MCP server.')]
     #[Nullable(true)]
     protected ?string $serverLabel = null;
-    #[Description('The tools available on the server.')]
-    #[Nullable(true)]
-    protected ?string $tools = null;
     /**
      * @var array<ResponseMCPTool>|null
      */
-    #[Description('The type of the item. Always mcp_list_tools.')]
+    #[Description('The tools available on the server.')]
     #[Nullable(true)]
-    protected ?array $type = null;
+    protected ?array $tools = null;
     #[Description('Error message if the server could not list tools.')]
     #[Nullable(true)]
     protected ?string $error = null;
+    #[Description('The type of the item. Always mcp_list_tools.')]
+    #[Nullable(true)]
+    protected ?string $type = 'mcp_list_tools';
     public function setId(?string $id): void
     {
         $this->id = $id;
@@ -48,27 +48,19 @@ class ResponseRequestInputMcpListTools extends ResponseRequestInput implements \
     {
         return $this->serverLabel;
     }
-    public function setTools(?string $tools): void
+    /**
+     * @param array<ResponseMCPTool>|null $tools
+     */
+    public function setTools(?array $tools): void
     {
         $this->tools = $tools;
-    }
-    public function getTools(): ?string
-    {
-        return $this->tools;
-    }
-    /**
-     * @param array<ResponseMCPTool>|null $type
-     */
-    public function setType(?array $type): void
-    {
-        $this->type = $type;
     }
     /**
      * @return array<ResponseMCPTool>|null
      */
-    public function getType(): ?array
+    public function getTools(): ?array
     {
-        return $this->type;
+        return $this->tools;
     }
     public function setError(?string $error): void
     {
@@ -78,6 +70,14 @@ class ResponseRequestInputMcpListTools extends ResponseRequestInput implements \
     {
         return $this->error;
     }
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
     public function toRecord(): \PSX\Record\RecordInterface
     {
         /** @var \PSX\Record\Record<mixed> $record */
@@ -85,8 +85,8 @@ class ResponseRequestInputMcpListTools extends ResponseRequestInput implements \
         $record->put('id', $this->id);
         $record->put('server_label', $this->serverLabel);
         $record->put('tools', $this->tools);
-        $record->put('type', $this->type);
         $record->put('error', $this->error);
+        $record->put('type', $this->type);
         return $record;
     }
     public function jsonSerialize(): object
