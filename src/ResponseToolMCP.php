@@ -8,6 +8,7 @@ namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
 use PSX\Schema\Attribute\Key;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseToolMCP extends ResponseTool implements \JsonSerializable, \PSX\Record\RecordableInterface
@@ -16,7 +17,8 @@ class ResponseToolMCP extends ResponseTool implements \JsonSerializable, \PSX\Re
     #[Description('A label for this MCP server, used to identify it in tool calls.')]
     protected ?string $serverLabel = null;
     #[Description('The type of the MCP tool. Always mcp.')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'mcp';
     /**
      * @var array<string>|null
      */

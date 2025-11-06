@@ -8,12 +8,14 @@ namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
 use PSX\Schema\Attribute\Key;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseToolWebSearch extends ResponseTool implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
     #[Description('The type of the web search tool. One of web_search or web_search_2025_08_26.')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'web_search';
     #[Description('Filters for the search.')]
     protected ?ResponseToolWebSearchFilter $filters = null;
     #[Key('search_context_size')]

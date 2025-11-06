@@ -7,6 +7,7 @@
 namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseTextFormatJsonSchema extends ResponseTextFormat implements \JsonSerializable, \PSX\Record\RecordableInterface
@@ -16,7 +17,8 @@ class ResponseTextFormatJsonSchema extends ResponseTextFormat implements \JsonSe
     #[Description('The schema for the response format, described as a JSON Schema object.')]
     protected mixed $schema = null;
     #[Description('The type of response format being defined. Always json_schema.')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'json_schema';
     #[Description('A description of what the response format is for, used by the model to determine how to respond in the format.')]
     protected ?string $description = null;
     #[Description('Whether to enable strict schema adherence when generating the output. If set to true, the model will always follow the exact schema defined in the schema field. Only a subset of JSON Schema is supported when strict is true.')]

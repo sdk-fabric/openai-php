@@ -7,12 +7,14 @@
 namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseTextFormatText extends ResponseTextFormat implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
     #[Description('')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'text';
     public function setType(?string $type): void
     {
         $this->type = $type;

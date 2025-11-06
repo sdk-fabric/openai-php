@@ -7,6 +7,7 @@
 namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseToolFunction extends ResponseTool implements \JsonSerializable, \PSX\Record\RecordableInterface
@@ -18,7 +19,8 @@ class ResponseToolFunction extends ResponseTool implements \JsonSerializable, \P
     #[Description('Whether to enforce strict parameter validation. Default true.')]
     protected ?bool $strict = null;
     #[Description('The type of the function tool. Always function.')]
-    protected ?string $type = null;
+    #[Nullable(true)]
+    protected ?string $type = 'function';
     #[Description('A description of the function. Used by the model to determine whether or not to call the function.')]
     protected ?string $description = null;
     public function setName(?string $name): void
