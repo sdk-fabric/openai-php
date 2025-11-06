@@ -8,6 +8,7 @@ namespace SdkFabric\Openai;
 
 use PSX\Schema\Attribute\Description;
 use PSX\Schema\Attribute\Key;
+use PSX\Schema\Attribute\Nullable;
 
 #[Description('')]
 class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterface
@@ -15,14 +16,19 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
     #[Description('Whether to run the model response in the background.')]
     protected ?bool $background = null;
     #[Description('The conversation that this response belongs to. Items from this conversation are prepended to input_items for this response request. Input items and output items from this response are automatically added to this conversation after this response completes.')]
-    protected ?ResponseRequestConversation $conversation = null;
+    #[Nullable(true)]
+    protected ?string $conversation = null;
     /**
      * @var array<string>|null
      */
     #[Description('Specify additional output data to include in the model response.')]
     protected ?array $include = null;
+    /**
+     * @var array<ResponseRequestInput>|null
+     */
     #[Description('Text, image, or file inputs to the model, used to generate a response.')]
-    protected ?string $input = null;
+    #[Nullable(true)]
+    protected ?array $input = null;
     #[Description('A system (or developer) message inserted into the model\'s context.  When using along with previous_response_id, the instructions from a previous response will not be carried over to the next response. This makes it simple to swap out system (or developer) messages in new responses.')]
     protected ?string $instructions = null;
     #[Key('max_output_tokens')]
@@ -62,14 +68,16 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
     #[Description('What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic. We generally recommend altering this or top_p but not both.')]
     protected ?float $temperature = null;
     #[Description('Configuration options for a text response from the model. Can be plain text or structured JSON data.')]
-    protected ?ResponseText $text = null;
+    #[Nullable(true)]
+    protected ?ResponseRequestText $text = null;
     #[Key('tool_choice')]
     #[Description('How the model should select which tool (or tools) to use when generating a response. See the tools parameter to see how to specify which tools the model can call.')]
     protected ?string $toolChoice = null;
     /**
-     * @var array<ResponseTool>|null
+     * @var array<ResponseRequestTool>|null
      */
     #[Description('An array of tools the model may call while generating a response. You can specify which tool to use by setting the tool_choice parameter.')]
+    #[Nullable(true)]
     protected ?array $tools = null;
     #[Key('top_logprobs')]
     #[Description('An integer between 0 and 20 specifying the number of most likely tokens to return at each token position, each with an associated log probability.')]
@@ -87,11 +95,11 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
     {
         return $this->background;
     }
-    public function setConversation(?ResponseRequestConversation $conversation): void
+    public function setConversation(?string $conversation): void
     {
         $this->conversation = $conversation;
     }
-    public function getConversation(): ?ResponseRequestConversation
+    public function getConversation(): ?string
     {
         return $this->conversation;
     }
@@ -109,11 +117,17 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
     {
         return $this->include;
     }
-    public function setInput(?string $input): void
+    /**
+     * @param array<ResponseRequestInput>|null $input
+     */
+    public function setInput(?array $input): void
     {
         $this->input = $input;
     }
-    public function getInput(): ?string
+    /**
+     * @return array<ResponseRequestInput>|null
+     */
+    public function getInput(): ?array
     {
         return $this->input;
     }
@@ -235,11 +249,11 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
     {
         return $this->temperature;
     }
-    public function setText(?ResponseText $text): void
+    public function setText(?ResponseRequestText $text): void
     {
         $this->text = $text;
     }
-    public function getText(): ?ResponseText
+    public function getText(): ?ResponseRequestText
     {
         return $this->text;
     }
@@ -252,14 +266,14 @@ class ResponseRequest implements \JsonSerializable, \PSX\Record\RecordableInterf
         return $this->toolChoice;
     }
     /**
-     * @param array<ResponseTool>|null $tools
+     * @param array<ResponseRequestTool>|null $tools
      */
     public function setTools(?array $tools): void
     {
         $this->tools = $tools;
     }
     /**
-     * @return array<ResponseTool>|null
+     * @return array<ResponseRequestTool>|null
      */
     public function getTools(): ?array
     {
