@@ -14,15 +14,15 @@ class ResponseRequestText implements \JsonSerializable, \PSX\Record\RecordableIn
 {
     #[Description('An object specifying the format that the model must output.')]
     #[Nullable(true)]
-    protected ?string $format = null;
+    protected ?ResponseRequestTextFormat $format = null;
     #[Description('Constrains the verbosity of the model\'s response. Lower values will result in more concise responses, while higher values will result in more verbose responses. Currently supported values are low, medium, and high.')]
     #[Nullable(true)]
     protected ?string $verbosity = null;
-    public function setFormat(?string $format): void
+    public function setFormat(?ResponseRequestTextFormat $format): void
     {
         $this->format = $format;
     }
-    public function getFormat(): ?string
+    public function getFormat(): ?ResponseRequestTextFormat
     {
         return $this->format;
     }
