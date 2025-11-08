@@ -21,11 +21,8 @@ abstract class CompletionMessage implements \JsonSerializable, \PSX\Record\Recor
 {
     #[Description('')]
     protected ?string $role = null;
-    /**
-     * @var array<string>|null
-     */
     #[Description('')]
-    protected ?array $content = null;
+    protected ?string $content = null;
     public function setRole(?string $role): void
     {
         $this->role = $role;
@@ -34,17 +31,11 @@ abstract class CompletionMessage implements \JsonSerializable, \PSX\Record\Recor
     {
         return $this->role;
     }
-    /**
-     * @param array<string>|null $content
-     */
-    public function setContent(?array $content): void
+    public function setContent(?string $content): void
     {
         $this->content = $content;
     }
-    /**
-     * @return array<string>|null
-     */
-    public function getContent(): ?array
+    public function getContent(): ?string
     {
         return $this->content;
     }
