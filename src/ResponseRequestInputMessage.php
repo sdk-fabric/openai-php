@@ -12,29 +12,20 @@ use PSX\Schema\Attribute\Nullable;
 #[Description('')]
 class ResponseRequestInputMessage extends ResponseRequestInput implements \JsonSerializable, \PSX\Record\RecordableInterface
 {
-    /**
-     * @var array<string>|null
-     */
     #[Description('Text, image, or audio input to the model, used to generate a response. Can also contain previous assistant responses.')]
     #[Nullable(true)]
-    protected ?array $content = null;
+    protected ?string $content = null;
     #[Description('The role of the message input. One of user, assistant, system, or developer.')]
     #[Nullable(true)]
     protected ?string $role = null;
     #[Description('The type of the message input. Always message.')]
     #[Nullable(true)]
     protected ?string $type = 'message';
-    /**
-     * @param array<string>|null $content
-     */
-    public function setContent(?array $content): void
+    public function setContent(?string $content): void
     {
         $this->content = $content;
     }
-    /**
-     * @return array<string>|null
-     */
-    public function getContent(): ?array
+    public function getContent(): ?string
     {
         return $this->content;
     }
