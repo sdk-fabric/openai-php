@@ -1,0 +1,11 @@
+{
+  "typehub_user": "sdkfabric",
+  "typehub_document": "openai",
+  "github_user": "sdk-fabric",
+  "github_repository": "openai-php",
+
+  "name": "sdkfabric/openai",
+  "description": "OpenAI PHP SDK managed by SDK Fabric",
+  "namespace": "SdkFabric\\Openai",
+  "website": "https://sdk-fabric.org"
+}
