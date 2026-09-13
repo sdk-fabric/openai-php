@@ -17,14 +17,14 @@ require __DIR__ . '/vendor/autoload.php';
 $client = new \SdkFabric\Openai\Client::build('[access_token]');
 
 // Creates a model response for the given chat conversation.
-$response = $client->completions()->create(new CompletionRequest());
+$response = $client->completions()->create(new Completion_Request());
 
 // Delete a stored chat completion.
 $response = $client->completions()->delete('completion_id');
 
 // List stored Chat Completions.
-$response = $client->completions()->getall('after', 1, 'model', 'order');
+$response = $client->completions()->getAll('after', 1, 'model', 'order');
 
 // Creates a model response.
-$response = $client->responses()->create(new ResponseRequest());
+$response = $client->responses()->create(new Response_Request());
 ```
