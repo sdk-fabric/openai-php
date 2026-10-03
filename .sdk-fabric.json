@@ -1,6 +1,6 @@
 {
   "name": "sdkfabric/openai",
-  "description": "OpenAI PHP SDK managed by SDK Fabric",
+  "description": "Openai PHP SDK managed by SDK Fabric",
   "namespace": "SdkFabric\\Openai",
   "website": "https://sdk-fabric.org"
 }
