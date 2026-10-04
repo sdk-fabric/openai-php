@@ -1,6 +1,6 @@
 {
   "name": "sdkfabric/openai",
-  "description": "OpenAI PHP SDK managed by SDK Fabric",
+  "description": "Openai PHP SDK managed by SDK Fabric",
   "homepage": "https://sdk-fabric.org",
   "license": "MIT",
   "authors": [
